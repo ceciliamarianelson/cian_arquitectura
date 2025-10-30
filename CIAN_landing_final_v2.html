@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CIAN | arquitectura — Arquitectura para la vida real</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFAF8;
+  --card:#FFFFFF;
+  --band:#D9D1C7;
+  --ink:#2C2C2C;
+  --cian:#B2D4DC;
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;padding:0;
+  background:var(--bg);color:var(--ink);
+  font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;height:auto;display:block} /* asegura visibilidad en mobile */
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+
+/* NAVBAR */
+.nav{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid rgba(44,44,44,.08)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;min-height:78px;padding:8px 0;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand img{height:36px;width:auto;flex-shrink:0}
+.brand .name{font-weight:700;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+
+/* SECTIONS / CARDS (espacios cortos y uniformes) */
+.section{padding:20px 0}
+.card{
+  background:#fff;
+  border:1px solid rgba(44,44,44,.08);
+  padding:22px;
+  border-radius:10px;
+}
+
+/* BAND */
+.band{
+  display:inline-block;
+  background:var(--band);
+  color:var(--ink);
+  padding:6px 14px;
+  border-radius:999px;
+  font-weight:700;
+  letter-spacing:.02em;
+}
+
+/* HERO */
+.hero{text-align:center}
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:600;
+  font-size:46px;
+  line-height:1.1;
+  margin:6px 0 10px;
+}
+.hero .over{margin:-4px auto 6px;display:inline-block}
+.hero .sub{max-width:820px;margin:0 auto 14px;font-size:17px}
+.btn{
+  display:inline-block;
+  padding:8px 16px;
+  border:3px solid var(--cian);
+  border-radius:999px;
+  font-weight:700;
+  background:transparent;
+  cursor:pointer;
+}
+.btn:hover{box-shadow:0 0 0 3px rgba(178,212,220,.25)}
+
+/* TITULARES DE SECCIÓN compactos */
+.card > h2{ font-size:24px; margin:10px 0 6px; }
+
+/* ===== Carrusel Proyectos (infinito moviendo nodos) ===== */
+.pcarousel{position:relative;margin-top:12px;--gap:10px;}
+.pcarousel .pc-viewport{overflow:hidden;}
+.pcarousel .pc-track{
+  display:flex; gap:var(--gap);
+  will-change: transform;
+  transition: transform .5s ease;
+}
+.pcarousel .pc-slide{
+  flex:0 0 clamp(200px,30vw,340px);
+  aspect-ratio:4/3;
+  border-radius:8px; overflow:hidden;
+  background:#f3f3f3; box-shadow:0 1px 5px rgba(0,0,0,.05);
+}
+.pcarousel .pc-slide img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* Chevrons minimal (sin rectángulo) */
+.pcarousel .pc-chevron{
+  position:absolute; top:50%; transform:translateY(-50%);
+  font-size:30px; line-height:1;
+  color:var(--cian); background:none; border:none; padding:0 8px;
+  cursor:pointer; opacity:.85; transition:opacity .2s ease; user-select:none;
+  z-index:1;
+}
+.pcarousel .pc-chevron:hover{opacity:1;}
+.pcarousel .pc-prev{ left:-6px; }
+.pcarousel .pc-next{ right:-6px; }
+
+/* GRID */
+.grid{display:grid;gap:14px}
+@media(min-width:860px){.grid.cols-2{grid-template-columns:1fr 1fr}}
+
+/* LISTAS */
+.bullets{margin:8px 0 0;padding-left:16px;font-size:15px;list-style:none}
+.bullets li{margin:4px 0;position:relative}
+.link-mini{
+  font-size:12.5px;       /* más chico */
+  font-weight:400;        /* sin negrita */
+  text-decoration:none;   /* sin subrayado */
+  color:rgba(44,44,44,.6);/* más claro */
+  transition:color .2s ease, opacity .2s ease;
+  opacity:.95;
+}
+.link-mini:hover{color:var(--cian);opacity:1}
+.link-mini::before{content:"(";opacity:.7}
+.link-mini::after{content:")";opacity:.7}
+
+/* HOW WE WORK (vertical compacto) */
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{background:#fff;border:1px solid rgba(44,44,44,.08);padding:16px;border-radius:8px}
+.step h4{margin:0 0 4px}
+
+/* CONTACTO */
+form{display:grid;gap:8px;max-width:680px;margin-top:6px}
+input,textarea{
+  width:100%; padding:10px;
+  border:1px solid rgba(44,44,44,.2); background:#fff; border-radius:8px;
+}
+textarea{min-height:110px;resize:vertical}
+
+/* FOOTER */
+footer{padding:28px 0}
+.footer-card{background:#fff;border:1px solid rgba(44,44,44,.08);padding:18px;border-radius:10px}
+.footer-flex{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.footer-left{display:flex;align-items:center;gap:8px;min-width:0}
+.footer-left img{height:28px;width:auto;flex-shrink:0}
+.footer-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.footer-social{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+.footer-legal-out{text-align:center;font-size:13px;opacity:.85;padding:16px 0 22px}
+
+/* MODALS base con animación visible */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.modal.active { display: flex; opacity: 1; }
+
+.modal-card {
+  background:#fff; max-width:720px; width:100%;
+  padding:20px; border-radius:12px; outline:none;
+  opacity:0; transform:translateY(-10px) scale(.95);
+  transition:opacity .25s ease, transform .25s ease;
+}
+.modal.active .modal-card { opacity:1; transform:translateY(0) scale(1); }
+.modal-card h3{margin-top:0}
+.close{float:right;border:0;background:transparent;font-size:22px;line-height:1;cursor:pointer}
+
+/* RESPONSIVE NAV + FOOTER: evita superposiciones en móvil */
+@media (max-width:820px){
+  .menu{gap:14px}
+}
+@media (max-width:680px){
+  .nav-inner{flex-wrap:wrap;gap:8px}
+  .brand img{height:30px}
+  .brand .name{font-size:14px}
+  .menu{
+    width:100%;
+    justify-content:space-between;
+    gap:10px;
+    font-size:14px;
+    padding-top:4px;
+  }
+  .footer-flex{flex-direction:column;align-items:flex-start;gap:10px}
+  .footer-right{align-items:flex-start}
+  .hero h1{font-size:38px}
+  .card{padding:18px}
+  .section{padding:16px 0}
+}
+/* oculta flechas en pantallas muy chicas; usa swipe */
+@media (max-width:560px){
+  .pcarousel .pc-chevron{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="wrap nav-inner">
+    <div class="brand">
+      <img src="logo.svg" alt="CIAN | arquitectura">
+      <div class="name">CIAN | arquitectura</div>
+    </div>
+    <nav class="menu" aria-label="Navegación principal">
+      <a href="#servicios">Servicios</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#sobre">Sobre CIAN</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="wrap section">
+  <div class="card hero">
+    <div class="over"><span class="band">HABITAR LO COTIDIANO</span></div>
+    <h1>Arquitectura para la vida real</h1>
+    <p class="sub">Diseñar es acompañar la forma de vivir.</p>
+    <a class="btn" href="#servicios">Conocé nuestros servicios</a>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos" class="wrap section">
+  <div class="card">
+    <span class="band">Proyectos destacados</span>
+    <h2>Espacios reales, funcionales y cálidos</h2>
+    <p style="margin:10px 0 0;font-size:17px">Buscamos equilibrio entre funcionalidad, materialidad simple y calidez.</p>
+
+    <div class="pcarousel" id="pcarousel" aria-label="Proyectos">
+      <div class="pc-viewport">
+        <div class="pc-track">
+          <!-- 15 originales: 1-2 .jpg, 3-15 .png -->
+          <div class="pc-slide"><img src="mis_fotos/proyecto1.jpg"  alt="Living contemporáneo con ventanal amplio y luz natural difusa"></div>
+          <div class="pc-slide"><img src="mis_fotos/proyecto2.jpg"  alt="Living contemporáneo con hogar"></div>
+          <div class="pc-slide"><img src="mis_fotos/proyecto3.png"  alt="Cocina práctica con alacenas claras y detalles de madera natural"  loading="lazy" decoding="async"></div>
+          <div class="pc-slide"><img src="mis_fotos/proyecto4.png"  alt="Cocina comedor integrada con materiales nobles pensada para la vida cotidiana"  loading="lazy" decoding="async"></div>
+          <div class="pc-slide"><img src="mis_fotos/proyecto5.png"  alt="Reforma de baño con paleta neutra y luz natural"  loading="lazy" decoding="async"></div>
+          <div class="pc-slide"><img src="mis_fotos/proyecto6.png"  alt="Monoambiente luminoso con mobiliario funcional"  loading="lazy" decoding="async"></div>
+          <div class="pc-slide"><img src="mis_fotos/proyecto7.png"  alt="Monoambiente con mobiliario funcional a medida"  loading="lazy" decoding="async"></div>
+          <div class="pc-slide"><img src="mis_fotos/proyecto8.png"  alt="Living comedor monoambiente"  loading="lazy" decoding="async"></div>
+          <div class="pc-slide"><img src="mis_fotos/proyecto9.png"  alt="Living comedor amplio con equilibrio entre luz y color"  loading="lazy" decoding="async"></div>
+          <div class="pc-slide"><img src="mis_fotos/proyecto10.png" alt="Cocina luminosa con detalles minimalistas y superficies limpias" loading="lazy" decoding="async"></div>
+          <div class="pc-slide"><img src="mis_fotos/proyecto11.png" alt="Barra de cocina que separa el living comedor, integrando ambos espacios con una transición cálida y funcional" loading="lazy" decoding="async"></div>
+          <div class="pc-slide"><img src="mis_fotos/proyecto12.png" alt="Dormitorio principal con líneas simples y atmósfera serena" loading="lazy" decoding="async"></div>
+          <div class="pc-slide"><img src="mis_fotos/proyecto13.png" alt="Cocina integrada al comedor con diseño funcional y cálido" loading="lazy" decoding="async"></div>
+          <div class="pc-slide"><img src="mis_fotos/proyecto14.png" alt="Galería exterior con mobiliario de líneas simples y tonos cálidos" loading="lazy" decoding="async"></div>
+          <div class="pc-slide"><img src="mis_fotos/proyecto15.png" alt="Ambiente social integrado, pensado para habitar lo cotidiano" loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+      <button class="pc-chevron pc-prev" aria-label="Anterior">‹</button>
+      <button class="pc-chevron pc-next" aria-label="Siguiente">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios" class="wrap section">
+  <div class="card">
+    <span class="band">Servicios</span>
+    <h2>Soluciones residenciales e inmobiliarias</h2>
+    <div class="grid cols-2" style="margin-top:14px">
+      <!-- Residenciales -->
+      <div>
+        <h3>Residenciales</h3>
+        <ul class="bullets">
+          <li>Consultoría express <a class="link-mini" href="#" data-modal="m1">ver más</a></li>
+          <li>Asesoramiento simple <a class="link-mini" href="#" data-modal="m2">ver más</a></li>
+          <li>Asesoramiento completo <a class="link-mini" href="#" data-modal="m3">ver más</a></li>
+          <li>Proyecto integral de diseño interior <a class="link-mini" href="#" data-modal="m4">ver más</a></li>
+          <li>Reformas y refacciones <a class="link-mini" href="#" data-modal="m5">ver más</a></li>
+        </ul>
+      </div>
+      <!-- Inmobiliarios -->
+      <div>
+        <h3>Inmobiliarios</h3>
+        <ul class="bullets">
+          <li>Plano actualizado <a class="link-mini" href="#" data-modal="m6">ver más</a></li>
+          <li>Redistribución + staging virtual <a class="link-mini" href="#" data-modal="m7">ver más</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO TRABAJAMOS (vertical) -->
+<section class="wrap section">
+  <div class="card">
+    <span class="band">Cómo trabajamos</span>
+    <h2>Etapas claras para avanzar con seguridad</h2>
+    <div class="steps" style="margin-top:14px">
+      <div class="step"><h4>1. Relevamiento y diagnóstico</h4><p>Análisis del espacio y condiciones existentes para comprender sus posibilidades y puntos a optimizar antes de avanzar con la propuesta.</p></div>
+      <div class="step"><h4>2. Propuesta</h4><p>Desarrollamos ideas funcionales y estéticas adaptadas a cada espacio, con soluciones técnicas pensadas para mejorar la experiencia y el uso diario.</p></div>
+      <div class="step"><h4>3. Documentación</h4><p>Transformamos la propuesta en un proyecto claro y definido, con planos, detalles y especificaciones que facilitan su ejecución.</p></div>
+      <div class="step"><h4>4. Ejecución o entrega digital</h4><p>Entregamos todo el material listo para aplicar o ejecutar: desde documentación técnica para obra hasta presentaciones digitales completas.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE CIAN -->
+<section id="sobre" class="wrap section">
+  <div class="card">
+    <span class="band">Sobre CIAN</span>
+    <h2>Arquitectura para la vida real</h2>
+    <p>Estudio con base en Buenos Aires. Diseñamos espacios claros, funcionales y cálidos. Trabajamos con pocos materiales bien elegidos y decisiones que mejoran lo cotidiano. Buscamos traducir las necesidades cotidianas en soluciones arquitectónicas simples, estéticas y sostenibles, que mejoren la experiencia de vivir.</p>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" class="wrap section">
+  <div class="card">
+    <span class="band">Contacto</span>
+    <h2>Conversemos tu proyecto</h2>
+    <form>
+      <input type="text" placeholder="Nombre" aria-label="Nombre">
+      <input type="email" placeholder="Email" aria-label="Email">
+      <textarea placeholder="Mensaje" aria-label="Mensaje"></textarea>
+      <button class="btn" type="submit">Enviar</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="wrap section">
+  <div class="footer-card">
+    <div class="footer-flex">
+      <div class="footer-left">
+        <img src="logo.svg" alt="CIAN | arquitectura">
+        <div class="name" style="font-weight:700">CIAN | arquitectura</div>
+      </div>
+      <div class="footer-right">
+        <div class="footer-social">
+          <a href="https://instagram.com/cian_arquitectura" target="_blank" rel="noopener">Instagram</a>
+          <span>·</span>
+          <a href="https://wa.me/+5491162879999?text=Hola%20CIAN%20|%20arquitectura" target="_blank" rel="noopener">WhatsApp</a>
+          <span>·</span>
+          <a href="mailto:hola@cianarquitectura.com">Mail</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<div class="footer-legal-out">© 2025 CIAN | arquitectura – Hecho en Buenos Aires • Todos los derechos reservados</div>
+
+<!-- ============= MODALES (m1–m7) ============= -->
+<div class="modal" id="m1"><div class="modal-card"><button class="close" data-close>&times;</button>
+  <h3>Consultoría express</h3>
+  <p><strong>Objetivo:</strong> resolver dudas puntuales sin encarar una propuesta completa. Pensada para quienes quieren tomar decisiones seguras sobre su espacio con una guía profesional rápida.</p>
+  <p><strong>Ideal para:</strong> decidir con seguridad antes de comprar, renovar o reconfigurar algo de un ambiente.</p>
+</div></div>
+
+<div class="modal" id="m2"><div class="modal-card"><button class="close" data-close>&times;</button>
+  <h3>Asesoramiento simple</h3>
+  <p><strong>Objetivo:</strong> desarrollar una propuesta visual y funcional para un ambiente puntual, con una base clara de materiales y mobiliario. Pensada para quienes buscan renovar o definir su estilo.</p>
+  <p><strong>Ideal para:</strong> actualizar un espacio con una guía clara y aplicable.</p>
+</div></div>
+
+<div class="modal" id="m3"><div class="modal-card"><button class="close" data-close>&times;</button>
+  <h3>Asesoramiento completo</h3>
+  <p><strong>Objetivo:</strong> ofrecer una propuesta integral de diseño interior, con desarrollo visual completo de materiales y mobiliario. Pensado para quienes desean visualizar su espacio antes de ejecutar cambios o una refacción.</p>
+  <p><strong>Ideal para:</strong> tener una propuesta visual integral antes de ejecutar.</p>
+</div></div>
+
+<div class="modal" id="m4"><div class="modal-card"><button class="close" data-close>&times;</button>
+  <h3>Proyecto integral de diseño interior</h3>
+  <p><strong>Objetivo:</strong> desarrollar un proyecto completo con documentación técnica lista para ejecutar. Dirigido a quienes planean una reforma o amoblamiento integral y necesitan planos, renders y detalles constructivos.</p>
+  <p><strong>Ideal para:</strong> encarar una reforma teniendo todo definido antes de comenzar.</p>
+</div></div>
+
+<div class="modal" id="m5"><div class="modal-card"><button class="close" data-close>&times;</button>
+  <h3>Reformas y refacciones</h3>
+  <p><strong>Objetivo:</strong> acompañar el proceso completo de transformación, desde el diseño hasta la ejecución de obra. Pensado para quienes buscan resultados reales, con seguimiento técnico y estético.</p>
+  <p><strong>Ideal para:</strong> quienes buscan acompañamiento profesional durante todo el proceso de obra.</p>
+</div></div>
+
+<div class="modal" id="m6"><div class="modal-card"><button class="close" data-close>&times;</button>
+  <h3>Plano actualizado</h3>
+  <p><strong>Objetivo:</strong> disponer de un plano claro, preciso y actualizado para publicar. Online o presencial con relevamiento.</p>
+  <p><strong>Ideal para:</strong> inmobiliarias que necesitan documentación simple y prolija para avisos.</p>
+</div></div>
+
+<div class="modal" id="m7"><div class="modal-card"><button class="close" data-close>&times;</button>
+  <h3>Redistribución + staging virtual</h3>
+  <p><strong>Objetivo:</strong> mostrar el potencial del inmueble con una propuesta de uso y <em>montaje virtual</em> (no es visualización 3D). Online o presencial con relevamiento.</p>
+  <p><strong>Ideal para:</strong> destacar puntos fuertes y acelerar consultas y visitas.</p>
+</div></div>
+
+<!-- ============= SCRIPTS ============= -->
+<script>
+/* Carrusel infinito sin clones: mueve nodos al vuelo + autoplay + swipe */
+(function(){
+  const root = document.getElementById('pcarousel');
+  if(!root) return;
+
+  const track   = root.querySelector('.pc-track');
+  const btnPrev = root.querySelector('.pc-prev');
+  const btnNext = root.querySelector('.pc-next');
+
+  let slideW = 0, animating = false;
+
+  function gapPx(){
+    const cs = getComputedStyle(track);
+    return parseFloat(cs.gap || cs.columnGap || '10') || 10;
+  }
+  function measure(){
+    const first = track.children[0];
+    if(!first) return;
+    slideW = first.getBoundingClientRect().width + gapPx();
+  }
+
+  function next(){
+    if(animating) return;
+    animating = true;
+    track.style.transition = 'transform .5s ease';
+    track.style.transform = `translateX(${-slideW}px)`;
+    track.addEventListener('transitionend', onNextEnd, {once:true});
+  }
+  function onNextEnd(){
+    track.style.transition = 'none';
+    track.appendChild(track.firstElementChild);
+    track.style.transform = 'translateX(0)';
+    void track.offsetHeight;
+    track.style.transition = 'transform .5s ease';
+    animating = false;
+  }
+  function prev(){
+    if(animating) return;
+    animating = true;
+    track.style.transition = 'none';
+    track.insertBefore(track.lastElementChild, track.firstElementChild);
+    track.style.transform = `translateX(${-slideW}px)`;
+    void track.offsetHeight;
+    track.style.transition = 'transform .5s ease';
+    track.style.transform   = 'translateX(0)';
+    track.addEventListener('transitionend', ()=>{ animating=false; }, {once:true});
+  }
+
+  // Autoplay con pausa hover/touch
+  let auto=null;
+  function start(){ if(!auto) auto = setInterval(()=> btnNext.click(), 4500); }
+  function stop(){ if(auto){ clearInterval(auto); auto=null; } }
+
+  // Swipe/drag
+  let startX=0, dragging=false;
+  function onDown(e){ dragging=true; startX=(e.touches?e.touches[0].clientX:e.clientX); stop(); }
+  function onMove(e){
+    if(!dragging) return;
+    const x=(e.touches?e.touches[0].clientX:e.clientX)-startX;
+    track.style.transition='none';
+    track.style.transform=`translateX(${Math.min(20, Math.max(-20, x))}px)`;
+  }
+  function onUp(e){
+    if(!dragging) return;
+    dragging=false;
+    const endX=(e.changedTouches?e.changedTouches[0].clientX:e.clientX);
+    const dx=endX-startX;
+    track.style.transition='transform .5s ease';
+    track.style.transform='translateX(0)';
+    if(Math.abs(dx)>40){ dx<0 ? next() : prev(); }
+    start();
+  }
+
+  btnNext.addEventListener('click', next);
+  btnPrev.addEventListener('click', prev);
+  window.addEventListener('resize', measure);
+
+  track.addEventListener('mousedown', onDown);
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('mouseup',   onUp);
+  track.addEventListener('touchstart', onDown, {passive:true});
+  track.addEventListener('touchmove',  onMove, {passive:true});
+  track.addEventListener('touchend',   onUp,   {passive:true});
+
+  root.addEventListener('mouseenter', stop);
+  root.addEventListener('mouseleave', start);
+  root.addEventListener('touchstart', stop, {passive:true});
+  root.addEventListener('touchend',   start, {passive:true});
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', ()=>{ measure(); start(); }, {once:true});
+  } else { measure(); start(); }
+})();
+</script>
+
+<script>
+/* Abrir/Cerrar modales + UX: click-fuera y tecla Esc + bloqueo de scroll */
+(function(){
+  const openLinks = document.querySelectorAll('[data-modal]');
+  const closeBtns = document.querySelectorAll('.close');
+  const modals    = document.querySelectorAll('.modal');
+
+  function open(id){
+    const m = document.getElementById(id);
+    if(!m) return;
+    m.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    const card = m.querySelector('.modal-card');
+    if(card){ card.setAttribute('tabindex','-1'); card.focus(); }
+  }
+  function close(m){
+    if(!m) return;
+    m.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  openLinks.forEach(a=>{
+    a.addEventListener('click', e=>{
+      e.preventDefault();
+      open(a.getAttribute('data-modal'));
+    });
+  });
+  closeBtns.forEach(b=>{
+    b.addEventListener('click', e=>{
+      e.preventDefault();
+      close(b.closest('.modal'));
+    });
+  });
+  modals.forEach(m=>{
+    m.addEventListener('click', e=>{ if(e.target===m) close(m); });
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.key==='Escape'){
+      document.querySelectorAll('.modal.active').forEach(close);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

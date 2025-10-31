@@ -362,24 +362,106 @@ footer{padding:28px 0}
   <div class="card">
     <span class="band">Contacto</span>
     <h2>Conversemos tu proyecto</h2>
-    <form>
-     <form action="https://formsubmit.co/hola@cianarquitectura.com" method="POST">
-  <input type="text" name="Nombre" placeholder="Nombre" aria-label="Nombre" required>
-  <input type="email" name="Email" placeholder="Email" aria-label="Email" required>
-  <textarea name="Mensaje" placeholder="Mensaje" aria-label="Mensaje" required></textarea>
 
-  <!-- Campos ocultos -->
-  <input type="hidden" name="_subject" value="Nueva consulta desde la web CIAN | arquitectura">
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_template" value="table">
-  <input type="hidden" name="_next" value="https://www.cianarquitectura.com/gracias.html">
-  <input type="text" name="_honey" style="display:none">
+    <form id="contactForm" action="https://formsubmit.co/hola@cianarquitectura.com" method="POST" novalidate>
+      <input type="text" name="Nombre" placeholder="Nombre" aria-label="Nombre" required>
+      <input type="email" name="Email" placeholder="Email" aria-label="Email" required>
+      <textarea name="Mensaje" placeholder="Mensaje" aria-label="Mensaje" required></textarea>
 
-  <button class="btn" type="submit">Enviar</button>
-</form>
+      <!-- Metadatos -->
+      <input type="hidden" name="_subject" value="Nueva consulta desde la web CIAN | arquitectura">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <!-- Si preferís redirección a /gracias.html, descomentá la línea de abajo -->
+      <!-- <input type="hidden" name="_next" value="https://www.cianarquitectura.com/gracias.html"> -->
+      <!-- Honeypot anti-spam -->
+      <input type="text" name="_honey" style="display:none">
+
+      <button class="btn" type="submit" id="sendBtn">Enviar</button>
+      <div id="formMsg" style="margin-top:10px;font-size:14px"></div>
     </form>
   </div>
 </section>
+
+<script>
+// Envío robusto por AJAX con fallback a submit normal
+(function(){
+  const form = document.getElementById('contactForm');
+  if(!form) return;
+
+  const msg  = document.getElementById('formMsg');
+  const btn  = document.getElementById('sendBtn');
+
+  function setState(state, text){
+    if(state === 'sending'){
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+      msg.style.color = '#666';
+      msg.textContent = 'Procesando, por favor esperá…';
+    } else if(state === 'ok'){
+      btn.disabled = false;
+      btn.textContent = 'Enviar';
+      msg.style.color = '#2C2C2C';
+      msg.textContent = '¡Gracias! Tu mensaje se envió correctamente. Te responderemos desde hola@cianarquitectura.com.';
+      // Opcional: reemplazar el formulario por un "gracias" breve
+      form.reset();
+    } else if(state === 'error'){
+      btn.disabled = false;
+      btn.textContent = 'Enviar';
+      msg.style.color = '#b00020';
+      msg.textContent = text || 'No pudimos enviar el mensaje. Intentá nuevamente.';
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Enviar';
+      msg.textContent = '';
+    }
+  }
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+
+    // Validación rápida nativa
+    if(!form.checkValidity()){
+      setState('error', 'Completá nombre, email y mensaje.');
+      return;
+    }
+
+    // Honeypot
+    const honey = form.querySelector('input[name="_honey"]');
+    if(honey && honey.value){
+      // Bot/Spam: no enviar
+      setState('ok'); // fingimos éxito para no dar pista
+      return;
+    }
+
+    setState('sending');
+
+    try{
+      const fd = new FormData(form);
+      // Endpoint AJAX de FormSubmit
+      const endpoint = 'https://formsubmit.co/ajax/hola@cianarquitectura.com';
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: fd
+      });
+
+      if(res.ok){
+        setState('ok');
+        // Si preferís redirigir a /gracias.html en lugar de mensaje inline:
+        // window.location.href = '/gracias.html';
+      } else {
+        // Fallback: submit tradicional por si algo bloquea AJAX
+        form.removeEventListener('submit', this);
+        form.submit();
+      }
+    } catch(err){
+      // Fallback: submit tradicional
+      form.submit();
+    }
+  });
+})();
+</script>
 
 <!-- FOOTER -->
 <footer class="wrap section">

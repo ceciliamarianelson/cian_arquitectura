@@ -365,15 +365,16 @@ footer{padding:28px 0}
 
     <form id="contactForm" action="https://formsubmit.co/hola@cianarquitectura.com" method="POST" novalidate>
       <input type="text" name="Nombre" placeholder="Nombre" aria-label="Nombre" required>
-      <input type="email" name="Email" placeholder="Email" aria-label="Email" required>
+      <!-- IMPORTANTE: name="email" para que Reply-To sea el del remitente -->
+      <input type="email" name="email" placeholder="Email" aria-label="Email" required>
       <textarea name="Mensaje" placeholder="Mensaje" aria-label="Mensaje" required></textarea>
 
       <!-- Metadatos -->
       <input type="hidden" name="_subject" value="Nueva consulta desde la web CIAN | arquitectura">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
-      <!-- Si preferís redirección a /gracias.html, descomentá la línea de abajo -->
-      <!-- <input type="hidden" name="_next" value="https://www.cianarquitectura.com/gracias.html"> -->
+      <!-- Autorespuesta al visitante -->
+      <input type="hidden" name="_autoresponse" value="¡Gracias por tu mensaje! Soy Cecilia de CIAN | arquitectura. Recibí tu consulta y te voy a responder desde hola@cianarquitectura.com a la brevedad.">
       <!-- Honeypot anti-spam -->
       <input type="text" name="_honey" style="display:none">
 
@@ -384,7 +385,7 @@ footer{padding:28px 0}
 </section>
 
 <script>
-// Envío robusto por AJAX con fallback a submit normal
+// Envío por AJAX + redirección a /gracias.html cuando sale OK
 (function(){
   const form = document.getElementById('contactForm');
   if(!form) return;
@@ -398,13 +399,6 @@ footer{padding:28px 0}
       btn.textContent = 'Enviando…';
       msg.style.color = '#666';
       msg.textContent = 'Procesando, por favor esperá…';
-    } else if(state === 'ok'){
-      btn.disabled = false;
-      btn.textContent = 'Enviar';
-      msg.style.color = '#2C2C2C';
-      msg.textContent = '¡Gracias! Tu mensaje se envió correctamente. Te responderemos desde hola@cianarquitectura.com.';
-      // Opcional: reemplazar el formulario por un "gracias" breve
-      form.reset();
     } else if(state === 'error'){
       btn.disabled = false;
       btn.textContent = 'Enviar';
@@ -420,7 +414,6 @@ footer{padding:28px 0}
   form.addEventListener('submit', async (e)=>{
     e.preventDefault();
 
-    // Validación rápida nativa
     if(!form.checkValidity()){
       setState('error', 'Completá nombre, email y mensaje.');
       return;
@@ -429,8 +422,8 @@ footer{padding:28px 0}
     // Honeypot
     const honey = form.querySelector('input[name="_honey"]');
     if(honey && honey.value){
-      // Bot/Spam: no enviar
-      setState('ok'); // fingimos éxito para no dar pista
+      // Silenciamos bots
+      window.location.href = '/gracias.html';
       return;
     }
 
@@ -438,7 +431,6 @@ footer{padding:28px 0}
 
     try{
       const fd = new FormData(form);
-      // Endpoint AJAX de FormSubmit
       const endpoint = 'https://formsubmit.co/ajax/hola@cianarquitectura.com';
       const res = await fetch(endpoint, {
         method: 'POST',
@@ -447,22 +439,18 @@ footer{padding:28px 0}
       });
 
       if(res.ok){
-        setState('ok');
-        // Si preferís redirigir a /gracias.html en lugar de mensaje inline:
-        // window.location.href = '/gracias.html';
+        // Redirección explícita a la página de gracias
+        window.location.href = '/gracias.html';
       } else {
-        // Fallback: submit tradicional por si algo bloquea AJAX
-        form.removeEventListener('submit', this);
+        // Fallback: submit tradicional (por si algo bloquea el fetch)
         form.submit();
       }
     } catch(err){
-      // Fallback: submit tradicional
-      form.submit();
+      form.submit(); // Fallback
     }
   });
 })();
 </script>
-
 <!-- FOOTER -->
 <footer class="wrap section">
   <div class="footer-card">

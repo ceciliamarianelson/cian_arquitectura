@@ -363,10 +363,20 @@ footer{padding:28px 0}
     <span class="band">Contacto</span>
     <h2>Conversemos tu proyecto</h2>
     <form>
-      <input type="text" placeholder="Nombre" aria-label="Nombre">
-      <input type="email" placeholder="Email" aria-label="Email">
-      <textarea placeholder="Mensaje" aria-label="Mensaje"></textarea>
-      <button class="btn" type="submit">Enviar</button>
+     <form action="https://formsubmit.co/hola@cianarquitectura.com" method="POST">
+  <input type="text" name="Nombre" placeholder="Nombre" aria-label="Nombre" required>
+  <input type="email" name="Email" placeholder="Email" aria-label="Email" required>
+  <textarea name="Mensaje" placeholder="Mensaje" aria-label="Mensaje" required></textarea>
+
+  <!-- Campos ocultos -->
+  <input type="hidden" name="_subject" value="Nueva consulta desde la web CIAN | arquitectura">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_template" value="table">
+  <input type="hidden" name="_next" value="https://www.cianarquitectura.com/gracias.html">
+  <input type="text" name="_honey" style="display:none">
+
+  <button class="btn" type="submit">Enviar</button>
+</form>
     </form>
   </div>
 </section>

@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <head>
-  <!-- Verificación de Google -->
+  <!-- ✅ Verificación de Google -->
   <meta name="google-site-verification" content="TU_CODIGO_AQUI" />
 
-  <!-- Configuración básica -->
+  <!-- ✅ Configuración básica -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CIAN | arquitectura — Arquitectura para la vida real</title>
 
-  <!-- SEO -->
-  <meta name="description" content="CIAN | arquitectura — Estudio de arquitectura en Buenos Aires especializado en proyectos residenciales, reformas y servicios inmobiliarios. Diseñamos espacios funcionales, simples y cálidos para la vida real.">
+  <!-- ✅ SEO -->
+  <meta name="description" content="Diseñamos espacios funcionales y cálidos para habitar lo cotidiano. Estudio de arquitectura en Buenos Aires especializado en proyectos residenciales, reformas y servicios inmobiliarios.">
   <meta name="keywords" content="arquitectura, interiorismo, reformas, Quilmes, planos, diseño de interiores, vivienda, inmobiliaria, asesoramiento, cian arquitectura">
   <meta name="author" content="CIAN | arquitectura">
 
-  <!-- Open Graph (para Facebook, Instagram, WhatsApp) -->
+  <!-- ✅ Open Graph (Facebook, Instagram, WhatsApp) -->
   <meta property="og:title" content="CIAN | arquitectura — Arquitectura para la vida real">
-  <meta property="og:description" content="Diseñamos espacios funcionales, simples y cálidos. Reformas, proyectos residenciales y servicios inmobiliarios.">
-  <meta property="og:image" content="https://www.cianarquitectura.com/mis_fotos/proyecto1.png">
+  <meta property="og:description" content="Diseñamos espacios funcionales y cálidos para habitar lo cotidiano.">
+  <meta property="og:image" content="https://www.cianarquitectura.com/logo.png">
   <meta property="og:url" content="https://www.cianarquitectura.com">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="CIAN | arquitectura">
 
-  <!-- Twitter Card -->
+  <!-- ✅ Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="CIAN | arquitectura — Arquitectura para la vida real">
-  <meta name="twitter:description" content="Diseñamos espacios funcionales, simples y cálidos.">
-  <meta name="twitter:image" content="https://www.cianarquitectura.com/mis_fotos/proyecto1.png">
+  <meta name="twitter:description" content="Diseñamos espacios funcionales y cálidos para habitar lo cotidiano.">
+  <meta name="twitter:image" content="https://www.cianarquitectura.com/logo.png">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://www.cianarquitectura.com/logo.png">
+  <!-- ✅ Favicon universal -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://www.cianarquitectura.com/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://www.cianarquitectura.com/logo.png">
+  <link rel="apple-touch-icon" href="https://www.cianarquitectura.com/logo.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#B2D4DC">
 
-  <!-- Fuentes -->
+  <!-- ✅ Fuentes -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Colores principales -->
+  <!-- ✅ Variables de color -->
   <style>
-  :root{
-    --bg:#FFFAF8;
-    --card:#FFFFFF;
-    --band:#D9D1C7;
-    --ink:#2C2C2C;
-    --cian:#B2D4DC;
-  }
+    :root {
+      --bg: #FFFAF8;
+      --card: #FFFFFF;
+      --band: #D9D1C7;
+      --ink: #2C2C2C;
+      --cian: #B2D4DC;
+    }
   </style>
 </head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CIAN | arquitectura — Arquitectura para la vida real</title>
@@ -363,18 +367,20 @@ footer{padding:28px 0}
     <span class="band">Contacto</span>
     <h2>Conversemos tu proyecto</h2>
 
-    <form id="contactForm" action="https://formsubmit.co/hola@cianarquitectura.com" method="POST" novalidate>
-      <input type="text" name="Nombre" placeholder="Nombre" aria-label="Nombre" required>
+    <form id="contactForm" action="https://formsubmit.co/hola@cianarquitectura.com" method="POST" accept-charset="UTF-8" novalidate>
+      <input type="text" name="Nombre" placeholder="Nombre" aria-label="Nombre" required autocomplete="name" minlength="2">
       <!-- IMPORTANTE: name="email" para que Reply-To sea el del remitente -->
-      <input type="email" name="email" placeholder="Email" aria-label="Email" required>
-      <textarea name="Mensaje" placeholder="Mensaje" aria-label="Mensaje" required></textarea>
+      <input type="email" name="email" placeholder="Email" aria-label="Email" required autocomplete="email" inputmode="email">
+      <textarea name="Mensaje" placeholder="Mensaje" aria-label="Mensaje" required minlength="5"></textarea>
 
       <!-- Metadatos -->
       <input type="hidden" name="_subject" value="Nueva consulta desde la web CIAN | arquitectura">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
-      <!-- Autorespuesta al visitante -->
+      <!-- ✅ Autorespuesta al visitante -->
       <input type="hidden" name="_autoresponse" value="¡Gracias por tu mensaje! Soy Cecilia de CIAN | arquitectura. Recibí tu consulta y te voy a responder desde hola@cianarquitectura.com a la brevedad.">
+      <!-- ✅ Redirección de respaldo (si no se usa AJAX o hay bloqueo) -->
+      <input type="hidden" name="_next" value="https://www.cianarquitectura.com/gracias.html">
       <!-- Honeypot anti-spam -->
       <input type="text" name="_honey" style="display:none">
 
@@ -385,13 +391,14 @@ footer{padding:28px 0}
 </section>
 
 <script>
-// Envío por AJAX + redirección a /gracias.html cuando sale OK
+// Envío por AJAX + redirección a /gracias.html cuando sale OK (fallback al submit tradicional)
 (function(){
   const form = document.getElementById('contactForm');
   if(!form) return;
 
   const msg  = document.getElementById('formMsg');
   const btn  = document.getElementById('sendBtn');
+  const THANKYOU = 'https://www.cianarquitectura.com/gracias.html';
 
   function setState(state, text){
     if(state === 'sending'){
@@ -423,7 +430,7 @@ footer{padding:28px 0}
     const honey = form.querySelector('input[name="_honey"]');
     if(honey && honey.value){
       // Silenciamos bots
-      window.location.href = '/gracias.html';
+      window.location.href = THANKYOU;
       return;
     }
 
@@ -440,7 +447,7 @@ footer{padding:28px 0}
 
       if(res.ok){
         // Redirección explícita a la página de gracias
-        window.location.href = '/gracias.html';
+        window.location.href = THANKYOU;
       } else {
         // Fallback: submit tradicional (por si algo bloquea el fetch)
         form.submit();
@@ -451,7 +458,8 @@ footer{padding:28px 0}
   });
 })();
 </script>
-<!-- FOOTER -->
+
+  <!-- FOOTER -->
 <footer class="wrap section">
   <div class="footer-card">
     <div class="footer-flex">

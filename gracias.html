@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>¡Gracias! | CIAN | arquitectura</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#FFFAF8;
+      --card:#FFFFFF;
+      --band:#D9D1C7;
+      --ink:#2C2C2C;
+      --cian:#B2D4DC;
+    }
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;padding:0;
+      background:var(--bg);color:var(--ink);
+      font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif
+    }
+    .wrap{max-width:800px;margin:0 auto;padding:40px 16px;}
+    .card{
+      background:#fff;
+      border:1px solid rgba(44,44,44,.08);
+      padding:28px;
+      border-radius:10px;
+      text-align:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.05);
+    }
+    .band{
+      display:inline-block;
+      background:var(--band);
+      color:var(--ink);
+      padding:6px 14px;
+      border-radius:999px;
+      font-weight:700;
+      letter-spacing:.02em;
+      margin-bottom:12px;
+    }
+    h1{
+      font-family:'Cormorant Garamond',serif;
+      font-weight:600;
+      font-size:38px;
+      line-height:1.2;
+      margin:10px 0 8px;
+    }
+    p{
+      margin:8px 0 0;
+      font-size:17px;
+    }
+    a.btn{
+      display:inline-block;
+      margin-top:18px;
+      padding:8px 16px;
+      border:3px solid var(--cian);
+      border-radius:999px;
+      font-weight:700;
+      background:transparent;
+      text-decoration:none;
+      color:inherit;
+      transition:box-shadow .25s ease;
+    }
+    a.btn:hover{box-shadow:0 0 0 3px rgba(178,212,220,.25)}
+    footer{
+      text-align:center;
+      font-size:13px;
+      opacity:.85;
+      margin-top:24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <span class="band">Mensaje enviado</span>
+      <h1>¡Gracias por tu mensaje!</h1>
+      <p>Tu consulta fue enviada correctamente. Te responderemos pronto desde <strong>hola@cianarquitectura.com</strong>.</p>
+      <a class="btn" href="/">Volver al inicio</a>
+    </div>
+    <footer>© 2025 CIAN | arquitectura — Hecho en Buenos Aires</footer>
+  </div>
+</body>
+</html>

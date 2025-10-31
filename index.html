@@ -387,19 +387,20 @@ footer{padding:28px 0}
     <span class="band">Contacto</span>
     <h2>Conversemos tu proyecto</h2>
 
-    <form id="contactForm" action="https://formsubmit.co/hola@cianarquitectura.com" method="POST" accept-charset="UTF-8" novalidate>
-      <input type="text" name="Nombre" placeholder="Nombre" aria-label="Nombre" required autocomplete="name" minlength="2">
-      <!-- IMPORTANTE: name="email" para que Reply-To sea el del remitente -->
-      <input type="email" name="email" placeholder="Email" aria-label="Email" required autocomplete="email" inputmode="email">
-      <textarea name="Mensaje" placeholder="Mensaje" aria-label="Mensaje" required minlength="5"></textarea>
+    <form id="contactForm" action="https://formsubmit.co/hola@cianarquitectura.com" method="POST" novalidate>
+      <input type="text" name="Nombre" placeholder="Nombre" aria-label="Nombre" required>
+      <!-- name="email" es clave para el autoresponder -->
+      <input type="email" name="email" placeholder="Email" aria-label="Email" required>
+      <textarea name="Mensaje" placeholder="Mensaje" aria-label="Mensaje" required></textarea>
 
       <!-- Metadatos -->
       <input type="hidden" name="_subject" value="Nueva consulta desde la web CIAN | arquitectura">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
-      <!-- ✅ Autorespuesta al visitante -->
+      <input type="hidden" name="_replyto" value="hola@cianarquitectura.com">
+      <!-- Autorespuesta al visitante -->
       <input type="hidden" name="_autoresponse" value="¡Gracias por tu mensaje! Soy Cecilia de CIAN | arquitectura. Recibí tu consulta y te voy a responder desde hola@cianarquitectura.com a la brevedad.">
-      <!-- ✅ Redirección de respaldo (si no se usa AJAX o hay bloqueo) -->
+      <!-- Redirección a página de gracias -->
       <input type="hidden" name="_next" value="https://www.cianarquitectura.com/gracias.html">
       <!-- Honeypot anti-spam -->
       <input type="text" name="_honey" style="display:none">
@@ -411,14 +412,13 @@ footer{padding:28px 0}
 </section>
 
 <script>
-// Envío por AJAX + redirección a /gracias.html cuando sale OK (fallback al submit tradicional)
+// Envío por AJAX + redirección a /gracias.html cuando sale OK
 (function(){
   const form = document.getElementById('contactForm');
   if(!form) return;
 
   const msg  = document.getElementById('formMsg');
   const btn  = document.getElementById('sendBtn');
-  const THANKYOU = 'https://www.cianarquitectura.com/gracias.html';
 
   function setState(state, text){
     if(state === 'sending'){
@@ -449,8 +449,7 @@ footer{padding:28px 0}
     // Honeypot
     const honey = form.querySelector('input[name="_honey"]');
     if(honey && honey.value){
-      // Silenciamos bots
-      window.location.href = THANKYOU;
+      window.location.href = '/gracias.html';
       return;
     }
 
@@ -466,19 +465,16 @@ footer{padding:28px 0}
       });
 
       if(res.ok){
-        // Redirección explícita a la página de gracias
-        window.location.href = THANKYOU;
+        window.location.href = '/gracias.html';
       } else {
-        // Fallback: submit tradicional (por si algo bloquea el fetch)
         form.submit();
       }
     } catch(err){
-      form.submit(); // Fallback
+      form.submit();
     }
   });
 })();
 </script>
-
   <!-- FOOTER -->
 <footer class="wrap section">
   <div class="footer-card">

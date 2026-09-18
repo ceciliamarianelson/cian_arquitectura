@@ -3,87 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,follow">
   <title>Gracias — CIAN | arquitectura</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#FFFAF8;
-      --card:#FFFFFF;
-      --ink:#2C2C2C;
-      --cian:#B2D4DC;
-    }
+    :root{--bg:#FFFAF8;--card:#FFFFFF;--ink:#2C2C2C;--cian:#B2D4DC}
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:'Montserrat',sans-serif;
-      background:var(--bg);
-      color:var(--ink);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height:100vh;
-      padding:20px;
-    }
-    .card{
-      background:var(--card);
-      border:1px solid rgba(44,44,44,.08);
-      border-radius:12px;
-      padding:40px 28px;
-      max-width:460px;
-      text-align:center;
-      box-shadow:0 2px 8px rgba(0,0,0,.05);
-      opacity:0;
-      transform:translateY(20px);
-      animation:fadeIn 1s ease forwards;
-    }
-    @keyframes fadeIn{
-      to{opacity:1;transform:translateY(0);}
-    }
-    h1{
-      font-family:'Cormorant Garamond',serif;
-      font-size:30px;
-      font-weight:500;
-      margin:0 0 14px;
-      opacity:0;
-      animation:fadeIn 1.2s ease .3s forwards;
-    }
-    p{
-      margin:0 0 22px;
-      font-size:15px;
-      line-height:1.6;
-      opacity:0;
-      animation:fadeIn 1.2s ease .5s forwards;
-    }
-    a.btn{
-      display:inline-block;
-      border:2px solid var(--cian);
-      color:var(--ink);
-      text-decoration:none;
-      font-weight:600;
-      padding:8px 18px;
-      border-radius:999px;
-      transition:.2s ease;
-      opacity:0;
-      animation:fadeIn 1.2s ease .7s forwards;
-    }
-    a.btn:hover{
-      background:var(--cian);
-      color:white;
-    }
-    img{
-      width:70px;
-      margin-bottom:10px;
-      opacity:0;
-      animation:fadeIn 1s ease .1s forwards;
-    }
+    body{margin:0;font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--ink);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+    .card{background:var(--card);border:1px solid rgba(44,44,44,.08);border-radius:12px;padding:40px 28px;max-width:500px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+    img{width:70px;height:auto;margin-bottom:18px}
+    h1{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;margin:0 0 14px}
+    p{margin:0 0 24px;font-size:15px;line-height:1.65}
+    a.btn{display:inline-block;border:2px solid var(--cian);color:var(--ink);text-decoration:none;font-weight:600;padding:9px 19px;border-radius:999px;transition:.2s ease}
+    a.btn:hover{background:var(--cian)}
   </style>
 </head>
 <body>
   <div class="card">
     <img src="https://www.cianarquitectura.com/logo.png" alt="CIAN | arquitectura">
     <h1>¡Gracias por tu mensaje!</h1>
-    <p>Tu consulta fue enviada correctamente.<br>En breve voy a responderte desde <strong>hola@cianarquitectura.com</strong>.</p>
-    <a href="https://www.cianarquitectura.com" class="btn">Volver al inicio</a>
+    <p>Recibí tu consulta. Voy a leerla y te voy a responder a la brevedad desde <strong>hola@cianarquitectura.com</strong>.</p>
+    <a href="/" class="btn">Volver al inicio</a>
   </div>
 </body>
 </html>
